@@ -3,7 +3,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = '...'
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 import os
 INSTALLED_APPS = [
