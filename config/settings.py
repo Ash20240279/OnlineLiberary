@@ -46,12 +46,31 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+try:
+    import dj_database_url
+except ImportError:
+    dj_database_url = None
+
+IS_VERCEL = "VERCEL" in os.environ
+
+if IS_VERCEL and os.environ.get("POSTGRES_URL") and dj_database_url:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get("POSTGRES_URL"),
+            conn_max_age=600,
+            ssl_require=True
+        )
     }
-}
+else:
+    db_path = str(BASE_DIR / 'db.sqlite3')
+    if IS_VERCEL:
+        db_path = '/tmp/db.sqlite3'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': db_path,
+        }
+    }
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
@@ -67,4 +86,22 @@ STATICFILES_DIRS = [
 LOGIN_URL = 'login'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+if IS_VERCEL:
+    MEDIA_ROOT = '/tmp/media'
+else:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Session settings for persistence
+SESSION_COOKIE_AGE = 86400 * 30  # 30 days
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# Static files storage using WhiteNoise
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}

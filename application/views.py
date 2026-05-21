@@ -189,9 +189,18 @@ def profile(request):
     profile_obj, created = UserProfile.objects.get_or_create(user=request.user)
     
     if request.method == 'POST' and request.FILES.get('profile_pic'):
-        profile_obj.profile_pic = request.FILES.get('profile_pic')
-        profile_obj.save()
-        messages.success(request, "Profile picture updated!")
+        uploaded_file = request.FILES.get('profile_pic')
+        try:
+            import base64
+            file_data = uploaded_file.read()
+            encoded_string = base64.b64encode(file_data).decode('utf-8')
+            mime_type = uploaded_file.content_type or 'image/png'
+            data_uri = f"data:{mime_type};base64,{encoded_string}"
+            profile_obj.profile_pic = data_uri
+            profile_obj.save()
+            messages.success(request, "Profile picture updated!")
+        except Exception as e:
+            messages.error(request, f"Error saving profile picture: {e}")
         return redirect('profile')
 
     total_borrowed = BorrowRecord.objects.filter(user=request.user).count()

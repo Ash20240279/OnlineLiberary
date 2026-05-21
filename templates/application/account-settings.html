@@ -47,7 +47,7 @@
       <h3>📷 Profile Picture</h3>
       <div class="pic-row">
         {% if profile.profile_pic %}
-        <img src="{{ profile.profile_pic.url }}" alt="Profile" />
+        <img src="{{ profile.profile_pic }}" alt="Profile" />
         {% else %}
         <img src="{% static 'images/default-user.png' %}" alt="Profile" />
         {% endif %}

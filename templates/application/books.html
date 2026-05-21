@@ -37,115 +37,19 @@
         <!-- Category -->
         <select name="category" id="cat-filter">
           <option value="">All Categories</option>
-
-          <option
-            value="Fiction"
-            {%
-            if
-            request.GET.category=""
-            ="Fiction"
-            %}selected{%
-            endif
-            %}
-          >
-            Fiction
-          </option>
-
-          <option
-            value="Science"
-            {%
-            if
-            request.GET.category=""
-            ="Science"
-            %}selected{%
-            endif
-            %}
-          >
-            Science
-          </option>
-
-          <option
-            value="History"
-            {%
-            if
-            request.GET.category=""
-            ="History"
-            %}selected{%
-            endif
-            %}
-          >
-            History
-          </option>
-
-          <option
-            value="Technology"
-            {%
-            if
-            request.GET.category=""
-            ="Technology"
-            %}selected{%
-            endif
-            %}
-          >
-            Technology
-          </option>
-
-          <option
-            value="Philosophy"
-            {%
-            if
-            request.GET.category=""
-            ="Philosophy"
-            %}selected{%
-            endif
-            %}
-          >
-            Philosophy
-          </option>
-
-          <option
-            value="Self Development"
-            {%
-            if
-            request.GET.category=""
-            ="Self Development"
-            %}selected{%
-            endif
-            %}
-          >
-            Self Development
-          </option>
+          <option value="Fiction" {% if request.GET.category == "Fiction" %}selected{% endif %}>Fiction</option>
+          <option value="Science" {% if request.GET.category == "Science" %}selected{% endif %}>Science</option>
+          <option value="History" {% if request.GET.category == "History" %}selected{% endif %}>History</option>
+          <option value="Technology" {% if request.GET.category == "Technology" %}selected{% endif %}>Technology</option>
+          <option value="Philosophy" {% if request.GET.category == "Philosophy" %}selected{% endif %}>Philosophy</option>
+          <option value="Self Development" {% if request.GET.category == "Self Development" %}selected{% endif %}>Self Development</option>
         </select>
 
         <!-- Status -->
         <select name="status" id="status-filter">
           <option value="">All Status</option>
-
-          <option
-            value="available"
-            {%
-            if
-            request.GET.status=""
-            ="available"
-            %}selected{%
-            endif
-            %}
-          >
-            Available
-          </option>
-
-          <option
-            value="borrowed"
-            {%
-            if
-            request.GET.status=""
-            ="borrowed"
-            %}selected{%
-            endif
-            %}
-          >
-            Borrowed
-          </option>
+          <option value="available" {% if request.GET.status == "available" %}selected{% endif %}>Available</option>
+          <option value="borrowed" {% if request.GET.status == "borrowed" %}selected{% endif %}>Borrowed</option>
         </select>
 
         <!-- Search Button -->

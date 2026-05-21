@@ -172,7 +172,7 @@
         <form id="profile-pic-form" method="POST" enctype="multipart/form-data">
           {% csrf_token %}
           {% if profile.profile_pic %}
-          <img id="profile-pic" src="{{ profile.profile_pic.url }}" alt="Profile Picture" />
+          <img id="profile-pic" src="{{ profile.profile_pic }}" alt="Profile Picture" />
           {% else %}
           <img id="profile-pic" src="{% static 'images/default-user.png' %}" alt="Default Profile" />
           {% endif %}
